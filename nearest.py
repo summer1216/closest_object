@@ -26,9 +26,13 @@ def draw_box(x, y, yaw, l, w):
 
 def draw_lane(poly_x,poly_y):
     poly_y = [x+2.5 for x in poly_y]
-    plt.plot(poly_x,poly_y,color='grey',linestyle="--")
+    plt.plot(poly_x,poly_y,color='grey',linestyle="-")
+    poly_y = [x+5 for x in poly_y]
+    plt.plot(poly_x,poly_y,color='grey',linestyle="-")
+    poly_y = [x-10 for x in poly_y]
+    plt.plot(poly_x,poly_y,color='grey',linestyle="-")
     poly_y = [x-5 for x in poly_y]
-    plt.plot(poly_x,poly_y,color='grey',linestyle="--")
+    plt.plot(poly_x,poly_y,color='grey',linestyle="-")
     
     
     
@@ -42,23 +46,27 @@ def create_object_poses():
     is_in_loop = True
     i = 0
     
-    random.seed(33)
+    random.seed(80)
     while is_in_loop:
         x = x+10
         n = random.randint(1,3)
         n2 = random.randint(-1,1)
-        if(random.choice([True, False]) and not((y == 0 or y==5) and x < 60)):
+        if(x>5 and x<20):
+            n2 += 2
+        if(x>20):
+            n2 += 3
+        if(random.choice([True, False]) and not((y == 0) and x < 60)):
             i+=1;
             random_x.append(x+n)
             random_y.append(y+n2)
-            n3 = random.uniform(-0.5,0.5)
+            n3 = random.uniform(-0.3,0.3)
             yaw.append(n3)
 
             if x>150:
                 x = -70
                 y += 5
 
-        if i==96:
+        if i==97:
             break
     return random_x, random_y, yaw       
 
@@ -68,7 +76,7 @@ def draw_all_boxes(x,y,yaw):
         draw_box(x[i], y[i],yaw[i],5,3 )
         
     draw_box(13,2,0.2,5,3)	
-    draw_box(22,3,0.5,5,3)
+    #draw_box(22,3,0.0,5,3)
     draw_box(34,5,0.1,5,3)
     draw_box(5,-5,0.1,5,3)	
     
